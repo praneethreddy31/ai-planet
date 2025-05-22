@@ -1,43 +1,39 @@
-# 1. Base Image:
-# Using Python 3.9 as a common, stable version. You can change to 3.10 or 3.11 if preferred.
-FROM python:3.9-slim
+# Use Python 3.11 as the base image
+FROM python:3.11-slim
 
-# 2. Set Environment Variables (Optional but good practice):
-# Prevents Python from writing .pyc files to disc (improves performance on some filesystems)
-ENV PYTHONDONTWRITEBYTECODE 1
-# Ensures Python output is sent straight to terminal (making
-# it easier to see logs in Cloud Run)
-ENV PYTHONUNBUFFERED 1
-
-# 3. Set Working Directory:
-# This is where your code will live inside the container
+# Set working directory
 WORKDIR /app
 
-# 4. Copy requirements.txt first:
-# This allows Docker to cache the installed packages layer if requirements.txt doesn't change
-COPY requirements.txt .
+# Set non-sensitive environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PORT=8000
 
-# 5. Install Dependencies:
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 6. Copy Your Application Code:
-# This copies everything from your 'backend' directory (where Dockerfile is)
-# into the /app directory in the container.
-# So, your 'backend/app/' folder will become '/app/app/' inside the container.
-COPY . .
+# If requirements.txt doesn't exist, use these common packages
+RUN if [ ! -f requirements.txt ]; then \
+    pip install --no-cache-dir fastapi uvicorn sqlalchemy psycopg2-binary \
+    python-multipart pydantic google-generativeai python-dotenv pdfplumber; \
+    fi
 
-# 7. Expose Port (Informational for Docker, Cloud Run uses $PORT):
-# The Gunicorn command below will bind to the $PORT variable provided by Cloud Run.
-EXPOSE 8080
+# Copy application code
+COPY ./app /app/
 
-# 8. Command to Run Your Application:
-# - "-w 4": Specifies 4 worker processes. Adjust based on your expected load and Cloud Run instance CPU.
-# - "-k uvicorn.workers.UvicornWorker": Tells Gunicorn to use Uvicorn for ASGI (FastAPI).
-# - "app.main:app": This is the crucial part.
-#   - Since your WORKDIR is /app and you COPY . ., your 'backend/app/' directory
-#     becomes '/app/app/' in the container.
-#   - Python will see an 'app' package (from the '/app/app/' directory)
-#     containing a 'main.py' module, with the FastAPI instance 'app'.
-# - "--bind 0.0.0.0:$PORT": Gunicorn listens on all interfaces on the port
-#   specified by the $PORT environment variable (provided by Cloud Run).
-CMD ["sh", "-c", "gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app --bind \"0.0.0.0:$PORT\""]
+# Expose the port the app runs on
+EXPOSE 8000
+
+# Create a non-root user and switch to it
+RUN adduser --disabled-password --gecos '' appuser
+USER appuser
+
+# Command to run the application - adjust this to your actual entry point
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -6,7 +6,6 @@ import { DocumentContext } from '../context/DocumentContext';
 const DocumentList = () => {
   const { documents } = useContext(DocumentContext);
   
-  // Ensure documents is an array with defensive programming
   const documentArray = Array.isArray(documents) ? documents : 
                         (documents && documents.documents && Array.isArray(documents.documents)) ? 
                         documents.documents : [];

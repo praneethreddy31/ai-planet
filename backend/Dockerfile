@@ -40,4 +40,4 @@ EXPOSE 8080
 #     containing a 'main.py' module, with the FastAPI instance 'app'.
 # - "--bind 0.0.0.0:$PORT": Gunicorn listens on all interfaces on the port
 #   specified by the $PORT environment variable (provided by Cloud Run).
-CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "app.main:app", "--bind", "0.0.0.0:$PORT"]
+CMD ["sh", "-c", "gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app --bind \"0.0.0.0:$PORT\""]

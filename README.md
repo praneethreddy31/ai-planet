@@ -5,16 +5,7 @@
 
 PDF-QA is a full-stack application that allows users to upload PDF documents and ask questions about their content. The system uses advanced natural language processing to analyze documents and provide accurate answers based on the document content.
 
-
-
-![PDF-QA Application Demo](https://example.com/demo-image.png)
-
-
-
 ## 🌟 Features
-
-
-
 - PDF Document Upload - Securely upload and manage your PDF documents
 
 - Natural Language Question Answering - Ask questions in plain English about your documents
@@ -24,13 +15,7 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
 - Conversation History - Review previous questions and answers
 
 - Responsive Design - Works on desktop and mobile devices
-
-
-
 ## 🏗️ Architecture
-
-
-
 ```
 
 +-------------------+    +-------------------+    +-------------------+
@@ -63,11 +48,7 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
 
 ```
 
-
 ## 🛠️ Tech Stack
-
-
-
 - Frontend: React.js, Context API, Axios
 
 - Backend: FastAPI, LangChain, LlamaIndex
@@ -78,11 +59,7 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
 
 - Storage: Google Cloud Storage (PDFs)
 
-
 ### Prerequisites
-
-
-
 - Python 3.9+
 
 - Node.js 14+
@@ -91,24 +68,17 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
 
 - Docker (optional for local development)
 
-
-
 ### Backend Setup
-
-
 
 1. Clone the repository
 
    ```bash
 
-   git clone https://github.com/yourusername/pdf-qa.git
+   git clone https://github.com/praneethreddy31/pdf-qa.git
 
    cd pdf-qa/backend
 
    ```
-
-
-
 2. Create a virtual environment
 
    ```bash
@@ -118,9 +88,6 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
    source venv/bin/activate  # On Windows: venv\Scripts\activate
 
    ```
-
-
-
 3. Install dependencies
 
    ```bash
@@ -128,9 +95,6 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
    pip install -r requirements.txt
 
    ```
-
-
-
 4. Set up environment variables
 
    ```bash
@@ -140,9 +104,6 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
    # Edit .env with your database credentials and API keys
 
    ```
-
-
-
 5. Run the backend
 
    ```bash
@@ -150,12 +111,7 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
    uvicorn app.main:app --reload
 
    ```
-
-
-
 ### Frontend Setup
-
-
 
 1. Navigate to the frontend directory
 
@@ -165,8 +121,6 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
 
    ```
 
-
-
 2. Install dependencies
 
    ```bash
@@ -174,9 +128,6 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
    npm install
 
    ```
-
-
-
 3. Set up environment variables
 
    ```bash
@@ -186,9 +137,6 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
    # Edit .env.local with your API endpoint
 
    ```
-
-
-
 4. Start the development server
 
    ```bash
@@ -196,51 +144,30 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
    npm run dev
 
    ```
-
-
-
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ### Backend Deployment to Google Cloud Run
 
-
-
 1. Build and push the Docker image
-
-
 
    First, make sure you have the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) installed and configured.
 
-
-
    ```bash
-
    # Navigate to backend directory
 
    cd backend
-
-
-
    # Initialize gcloud if you haven't already
 
    gcloud init
-
-
-
    # Enable required APIs
 
    gcloud services enable cloudbuild.googleapis.com run.googleapis.com
-
-
 
    # Build and push the Docker image
 
    gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/pdf-qa-backend
 
    ```
-
-
-
 2. Deploy to Cloud Run
 
 
@@ -262,16 +189,9 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
      --set-env-vars="DATABASE_URL=postgresql://username:password@host:port/database"
 
    ```
-
-
-
 3. Set up Cloud SQL (if using)
 
-
-
    For production deployments, you should use a managed PostgreSQL instance:
-
-
 
    ```bash
 
@@ -291,8 +211,6 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
 
    gcloud sql databases create pdf_qa_db --instance=pdf-qa-db
 
-
-
    # Create a user
 
    gcloud sql users create pdf_qa_user \
@@ -311,8 +229,6 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
 
 1. Push your code to GitHub
 
-
-
 2. Connect to Vercel
 
    - Create an account on [Vercel](https://vercel.com) if you don't have one
@@ -326,9 +242,6 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
      - Output Directory: `build`
 
      - Install Command: `npm install`
-
-
-
 3. Set environment variables
 
    - Go to your project settings in Vercel
@@ -340,9 +253,6 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
      REACT_APP_API_URL=https://pdf-qa-backend-xxxxxxxx-uc.a.run.app/api
 
      ```
-
-
-
 4. Deploy
 
    - Click "Deploy" and wait for the build to complete
@@ -350,20 +260,14 @@ PDF-QA is a full-stack application that allows users to upload PDF documents and
    - Your app will be available at `https://your-project-name.vercel.app`
 
 
-
 ## 📚 API Documentation
-
 
 
 Once deployed, you can access the API documentation at:
 
 `https://pdf-qa-backend-xxxxxxxx-uc.a.run.app/docs`
 
-
-
 ### Key Endpoints
-
-
 
 - `POST /api/documents/upload/` - Upload a PDF document
 
@@ -374,8 +278,6 @@ Once deployed, you can access the API documentation at:
 
 ### Backend Tests
 
-
-
 ```bash
 
 cd backend
@@ -384,11 +286,7 @@ pytest
 
 ```
 
-
-
 ### Frontend Tests
-
-
 
 ```bash
 
@@ -422,10 +320,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## ⚠️ Requirements
 
-
-
 - Node.js - v14.x or higher
 
 - Python - v3.9 or higher
 
-- PostgreSQL - v13 or higher
+- PostgreSQL - v13 or higFailedto

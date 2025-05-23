@@ -2,7 +2,7 @@ import axios from 'axios';
 import { uploadFile, fetchDocuments, fetchQuestionHistory } from './api';
 
 // Define your API URL constant
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://fastapi-ai-service-272733104980.asia-south1.run.app';
 
 export { fetchDocuments, fetchQuestionHistory };
 

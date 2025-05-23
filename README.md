@@ -1,327 +1,196 @@
+## AI-Planet-QA: Document Question-Answering System
 
-# PDF-QA: Document Question-Answering System
+ lets users upload PDF documents and ask questions about their content using natural language processing.
 
+(!! may down few times due to API connectivity !!)
 
+---
 
-PDF-QA is a full-stack application that allows users to upload PDF documents and ask questions about their content. The system uses advanced natural language processing to analyze documents and provide accurate answers based on the document content.
+### 🌟 Features
 
-## 🌟 Features
-- PDF Document Upload - Securely upload and manage your PDF documents
+* PDF Upload & Management
+* Natural Language Q\&A
+* Conversation History
+* Responsive Design
 
-- Natural Language Question Answering - Ask questions in plain English about your documents
+---
 
-- Document Management - Keep track of all your uploaded documents
+### 🏗️ Architecture
 
-- Conversation History - Review previous questions and answers
-
-- Responsive Design - Works on desktop and mobile devices
-## 🏗️ Architecture
+```mermaid
+graph LR
+    A[React Frontend <br>(Vercel)] <--> B[FastAPI Backend <br>(Google Cloud Run)]
+    B <--> C[PostgreSQL DB <br>(Google Cloud SQL)]
+    B --> D[LangChain/LlamaIndex <br>(NLP Processing)]
+    B --> E[PDF Storage <br>(Google Cloud Storage)]
 ```
 
-+-------------------+    +-------------------+    +-------------------+
+---
 
-|                   |    |                   |    |                   |
+### 🔧 Tech Stack
 
-|  React Frontend   |<-->|  FastAPI Backend  |<-->|  PostgreSQL DB    |
+* **Frontend:** React.js, Context API, Axios
+* **Backend:** Python, FastAPI, LangChain, LlamaIndex, SQLAlchemy
+* **Database:** PostgreSQL (Google Cloud SQL)
+* **Deployment:** Vercel (Frontend), Google Cloud Run (Backend)
+* **Storage:** Google Cloud Storage
 
-|  (Vercel)         |    |  (Google Cloud Run)|    |  (Cloud SQL)      |
+---
 
-|                   |    |                   |    |                   |
+### 🚀 Prerequisites
 
-+-------------------+    +-------------------+    +-------------------+
+* Python 3.9+
+* Node.js 14+
+* PostgreSQL (for local development)
+* Docker (recommended for backend)
+* Google Cloud SDK
 
-                              |
+---
 
-                              v
+### 🎓 Local Development Setup
 
-                      +-------------------+    +-------------------+
+#### Backend (`/backend` directory)
 
-                      |                   |    |                   |
-
-                      |  LangChain/LlamaIndex |    | PDF Storage       |
-
-                      |  (NLP Processing)  |    | (Cloud Storage)    |
-
-                      |                   |    |                   |
-
-                      +-------------------+    +-------------------+
-
-```
-
-## 🛠️ Tech Stack
-- Frontend: React.js, Context API, Axios
-
-- Backend: FastAPI, LangChain, LlamaIndex
-
-- Database: PostgreSQL
-
-- Deployment: Vercel (Frontend), Google Cloud Run (Backend)
-
-- Storage: Google Cloud Storage (PDFs)
-
-### Prerequisites
-- Python 3.9+
-
-- Node.js 14+
-
-- PostgreSQL
-
-- Docker (optional for local development)
-
-### Backend Setup
-
-1. Clone the repository
-
-   ```bash
-
-   git clone https://github.com/praneethreddy31/pdf-qa.git
-
-   cd pdf-qa/backend
-
-   ```
-2. Create a virtual environment
-
-   ```bash
-
-   python -m venv venv
-
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-   ```
-3. Install dependencies
-
-   ```bash
-
-   pip install -r requirements.txt
-
-   ```
-4. Set up environment variables
-
-   ```bash
-
-   cp .env.example .env
-
-   # Edit .env with your database credentials and API keys
-
-   ```
-5. Run the backend
-
-   ```bash
-
-   uvicorn app.main:app --reload
-
-   ```
-### Frontend Setup
-
-1. Navigate to the frontend directory
-
-   ```bash
-
-   cd ../frontend
-
-   ```
-
-2. Install dependencies
-
-   ```bash
-
-   npm install
-
-   ```
-3. Set up environment variables
-
-   ```bash
-
-   cp .env.example .env.local
-
-   # Edit .env.local with your API endpoint
-
-   ```
-4. Start the development server
-
-   ```bash
-
-   npm run dev
-
-   ```
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
-
-### Backend Deployment to Google Cloud Run
-
-1. Build and push the Docker image
-
-   First, make sure you have the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) installed and configured.
-
-   ```bash
-   # Navigate to backend directory
-
-   cd backend
-   # Initialize gcloud if you haven't already
-
-   gcloud init
-   # Enable required APIs
-
-   gcloud services enable cloudbuild.googleapis.com run.googleapis.com
-
-   # Build and push the Docker image
-
-   gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/pdf-qa-backend
-
-   ```
-2. Deploy to Cloud Run
-
-
-
-   ```bash
-
-   gcloud run deploy pdf-qa-backend \
-
-     --image gcr.io/YOUR_PROJECT_ID/pdf-qa-backend \
-
-     --platform managed \
-
-     --region us-central1 \
-
-     --allow-unauthenticated \
-
-     --memory 2Gi \
-
-     --set-env-vars="DATABASE_URL=postgresql://username:password@host:port/database"
-
-   ```
-3. Set up Cloud SQL (if using)
-
-   For production deployments, you should use a managed PostgreSQL instance:
-
-   ```bash
-
-   # Create a Cloud SQL instance
-
-   gcloud sql instances create pdf-qa-db \
-
-     --database-version=POSTGRES_13 \
-
-     --tier=db-g1-small \
-
-     --region=us-central1
-
-
-
-   # Create a database
-
-   gcloud sql databases create pdf_qa_db --instance=pdf-qa-db
-
-   # Create a user
-
-   gcloud sql users create pdf_qa_user \
-
-     --instance=pdf-qa-db \
-
-     --password=YOUR_SECURE_PASSWORD
-
-   ```
-
-
-
-### Frontend Deployment to Vercel
-
-
-
-1. Push your code to GitHub
-
-2. Connect to Vercel
-
-   - Create an account on [Vercel](https://vercel.com) if you don't have one
-
-   - Import your GitHub repository
-
-   - Configure the project:
-
-     - Build Command: `npm run build`
-
-     - Output Directory: `build`
-
-     - Install Command: `npm install`
-3. Set environment variables
-
-   - Go to your project settings in Vercel
-
-   - Add the following environment variable:
-
-     ```
-
-     REACT_APP_API_URL=https://pdf-qa-backend-xxxxxxxx-uc.a.run.app/api
-
-     ```
-4. Deploy
-
-   - Click "Deploy" and wait for the build to complete
-
-   - Your app will be available at `https://your-project-name.vercel.app`
-
-
-## 📚 API Documentation
-
-
-Once deployed, you can access the API documentation at:
-
-`https://pdf-qa-backend-xxxxxxxx-uc.a.run.app/docs`
-
-### Key Endpoints
-
-- `POST /api/documents/upload/` - Upload a PDF document
-
-- `GET /api/documents/` - Get list of uploaded documents
-
-- `POST /api/questions/ask/` - Ask a question about a document
-
-
-### Backend Tests
+1. **Clone & Navigate:**
 
 ```bash
-
-cd backend
-
-pytest
-
+git clone https://github.com/praneethreddy31/pdf-qa.git && cd pdf-qa/backend
 ```
 
-### Frontend Tests
+2. **Virtual Environment:**
 
 ```bash
-
-cd frontend
-
-npm test
-
+python -m venv venv && source venv/bin/activate  # Windows: venv\Scripts\activate
 ```
 
+3. **Install Requirements:**
 
+```bash
+pip install -r requirements.txt
+```
 
-## 🤝 Contributing
+4. **Environment Variables:**
 
+```bash
+cp .env.example .env  # Edit .env with DB, GEMINI_API_KEY, API_V1_STR
+```
 
+5. **Database:** Ensure your PostgreSQL schema is initialized.
+6. **Run Server:**
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+```bash
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
 
+#### Frontend (`/frontend` directory)
 
+1. **Navigate:**
 
-1. Fork the repository
+```bash
+cd ../frontend
+```
 
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+2. **Install Dependencies:**
 
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+```bash
+npm install
+```
 
-4. Push to the branch (`git push origin feature/amazing-feature`)
+3. **Environment Variables:**
 
-5. Open a Pull Request
+```bash
+cp .env.example .env.local  # Edit with REACT_APP_API_URL=http://localhost:8000/api
+```
 
+4. **Run App:**
 
+```bash
+npm run dev
+```
 
-## ⚠️ Requirements
+---
 
-- Node.js - v14.x or higher
+### 🚧 Backend Deployment (Google Cloud Run & Cloud SQL)
 
-- Python - v3.9 or higher
+#### Prepare Google Cloud
 
-- PostgreSQL - v13 or higFailedto
+```bash
+gcloud auth login
+gcloud config set project YOUR_PROJECT_ID
+gcloud services enable cloudbuild.googleapis.com run.googleapis.com sqladmin.googleapis.com containerregistry.googleapis.com
+```
+
+#### Create Cloud SQL Instance
+
+* Instance: `pdf-qa-db`, Version: `POSTGRES_13`
+* DB: `pdf_qa_db`, User: `pdf_qa_user`, Secure password
+* Note: `YOUR_PROJECT_ID:YOUR_REGION:YOUR_INSTANCE_NAME`
+
+#### Build & Push Docker Image (from `/backend`)
+
+```bash
+export GCR_PATH=gcr.io/YOUR_PROJECT_ID/pdf-qa-backend
+gcloud builds submit --tag ${GCR_PATH}
+```
+
+#### Deploy with Cloud SQL Auth Proxy
+
+```bash
+export CLOUD_RUN_SERVICE_NAME=pdf-qa-backend
+export CLOUD_RUN_REGION=your-region
+export CLOUD_SQL_CONNECTION_NAME=YOUR_PROJECT_ID:REGION:INSTANCE_NAME
+
+gcloud run deploy ${CLOUD_RUN_SERVICE_NAME} \
+    --image ${GCR_PATH} \
+    --platform managed \
+    --region ${CLOUD_RUN_REGION} \
+    --allow-unauthenticated \
+    --memory 2Gi \
+    --add-cloudsql-instances ${CLOUD_SQL_CONNECTION_NAME} \
+    --set-env-vars="SQLALCHEMY_DATABASE_URL=postgresql://pdf_qa_user:YOUR_SECURE_PASSWORD@localhost/pdf_qa_db?host=/cloudsql/${CLOUD_SQL_CONNECTION_NAME}" \
+    --set-env-vars="GEMINI_API_KEY=YOUR_GEMINI_API_KEY" \
+    --set-env-vars="API_V1_STR=/api"
+```
+
+---
+
+### 📁 Frontend Deployment (Vercel)
+
+1. Push code to Git repo
+2. Connect repo to Vercel
+3. Configure project settings:
+
+   * Build: `npm run build`
+   * Output: `build`
+4. Add env variable:
+
+   * `REACT_APP_API_URL=https://your-cloud-run-service-url/api`
+5. Deploy via Vercel dashboard
+
+---
+
+### 📃 API Documentation
+
+Available at: `https://your-cloud-run-service-url/docs`
+
+#### Key Endpoints (`/api` prefix assumed)
+
+* `POST /documents/upload/`
+* `GET /documents/`
+* `POST /questions/ask/`
+* `GET /questions/{document_id}/history/`
+
+---
+
+### 🔧 Running Tests
+
+* **Backend:** `pytest`
+* **Frontend:** `npm test`
+
+---
+
+### 👍 Contributing
+
+Standard GitHub workflow:
+
+* Fork > Branch > Commit > Push > PR

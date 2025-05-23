@@ -17,7 +17,7 @@ export const DocumentProvider = ({ children }) => {
       setDocuments(data);
       setError(null);
     } catch (err) {
-      setError('Failed to load documents');
+      setError('API is Connection Slow Please Wait!!!');
       console.error(err);
     } finally {
       setLoading(false);

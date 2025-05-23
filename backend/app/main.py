@@ -1,12 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from app.api.endpoints import documents, questions
-from app.db.database import init_db
-from app.core.config import settings
-from app.api.endpoints import documents, questions
-
-# REMOVED: from pydantic_settings import BaseSettings - Not needed here
+from api.endpoints import documents, questions
+from db.database import init_db
+from core.config import settings
 
 app = FastAPI(title=settings.PROJECT_NAME)
 
@@ -26,18 +22,16 @@ def startup_event():
 
 # Register routers
 app.include_router(
-    documents.router, 
-    prefix=f"{settings.API_V1_STR}/documents", 
+    documents.router,
+    prefix=f"{settings.API_V1_STR}/documents",
     tags=["documents"]
 )
 app.include_router(
-    questions.router, 
-    prefix=f"{settings.API_V1_STR}/questions", 
+    questions.router,
+    prefix=f"{settings.API_V1_STR}/questions",
     tags=["questions"]
 )
-
 
 @app.get("/")
 def read_root():
     return {"message": f"Welcome to {settings.PROJECT_NAME}"}
-

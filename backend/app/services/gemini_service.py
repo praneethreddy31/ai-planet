@@ -1,10 +1,10 @@
 import google.generativeai as genai
 from typing import Dict, Any
 
-from app.core.config import settings
+from core.config import settings
 
 # Configure the API
-genai.configure(api_key=settings.GOOGLE_API_KEY)
+genai.configure(api_key=settings.GEMINI_API_KEY)
    
 def answer_question(document_content: str, question: str) -> Dict[str, Any]:
     """Generate an answer using Gemini based on document content"""

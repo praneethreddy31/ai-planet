@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
 # Import Base from wherever it's defined in your project
-from app.db.database import Base  # Adjust as needed
+from db.database import Base  # Adjust as needed
 
 class Document(Base):
     __tablename__ = "documents"

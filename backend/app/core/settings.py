@@ -9,7 +9,7 @@ load_dotenv()
 class Settings(BaseSettings):
     PROJECT_NAME: str = "PDF Q&A API"
     SQLALCHEMY_DATABASE_URL: Optional[str] = os.getenv("SQLALCHEMY_DATABASE_URL")
-    GOOGLE_API_KEY: Optional[str] = os.getenv("GOOGLE_API_KEY")
+    GEMINI_API_KEY: Optional[str] = os.getenv("GEMINI_API_KEY")
     
     model_config = {
         "env_file": ".env",

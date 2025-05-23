@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     SQLALCHEMY_DATABASE_URL: str = os.getenv("SQLALCHEMY_DATABASE_URL")
     
     # API Keys
-    GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY")
+    GOOGLE_API_KEY: str = os.getenv("GEMINI_API_KEY")
     
     class Config:
         case_sensitive = True

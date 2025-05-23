@@ -21,5 +21,5 @@ def get_db():  # <--- HERE IT IS!
 
 def create_tables():
     # Import the models here to ensure they are registered with Base
-    from app.db.models import Document, Question # This implies app.db.models.py should exist
+    from db.models import Document, Question # This implies app.db.models.py should exist
     Base.metadata.create_all(bind=engine)

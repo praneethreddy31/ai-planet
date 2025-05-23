@@ -1,8 +1,8 @@
 # app/db/init_db.py
 from sqlalchemy.orm import Session
 
-from app.db.models import Base
-from app.db.database import engine, SessionLocal
+from db.models import Base
+from db.database import engine, SessionLocal
 
 def init_db():
     """Initialize the database by creating all tables."""

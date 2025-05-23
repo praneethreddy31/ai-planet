@@ -1,9 +1,9 @@
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.db.database import get_db
-from app.db.models import Document
-from app.services.document_processor import process_pdf
+from db.database import get_db
+from db.models import Document
+from services.document_processor import process_pdf
 
 router = APIRouter()
 

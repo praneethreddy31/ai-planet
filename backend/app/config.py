@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     SQLALCHEMY_DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./app.db")  # Fixed typo in SQLALCHEMY
     
     # API Keys
-    GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "")
+    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
     
     model_config = {  # UPDATED: Changed from class Config to model_config dict
         "case_sensitive": True

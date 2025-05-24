@@ -39,7 +39,7 @@ const FileUploader = () => {
       refreshDocuments();
     } catch (err) {
       console.error('Upload error:', err);
-      setError(err.response?.data?.detail || 'Failed to upload document');
+      setError(err.response?.data?.detail || 'facing API issue ! please try later , meanwhile use uploaded DOCs ');
     } finally {
       setUploading(false);
     }

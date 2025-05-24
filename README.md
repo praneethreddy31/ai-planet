@@ -12,11 +12,6 @@
 * Natural Language Q\&A
 * Conversation History
 * Responsive Design
-
----
-
-### 🏗️ Architecture
-
 ---
 
 ### 🔧 Tech Stack

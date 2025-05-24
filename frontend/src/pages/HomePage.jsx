@@ -10,7 +10,7 @@ const HomePage = () => {
   return (
     <div className="home-page">
       <h1>PDF Question & Answer</h1>
-      <p>Upload a PDF document and ask questions about its content</p>
+      <p><b>CURRENTLY UPLOADING NEW FILES HAS BEEN TERMINATED DUE API ISSUES</b></p>
       
       <FileUploader />
       

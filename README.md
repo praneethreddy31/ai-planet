@@ -17,14 +17,6 @@
 
 ### 🏗️ Architecture
 
-```mermaid
-graph LR
-    A[React Frontend <br>(Vercel)] <--> B[FastAPI Backend <br>(Google Cloud Run)]
-    B <--> C[PostgreSQL DB <br>(Google Cloud SQL)]
-    B --> D[LangChain/LlamaIndex <br>(NLP Processing)]
-    B --> E[PDF Storage <br>(Google Cloud Storage)]
-```
-
 ---
 
 ### 🔧 Tech Stack
